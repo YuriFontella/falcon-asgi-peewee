@@ -1,4 +1,6 @@
-import uvicorn, argparse, os
+import uvicorn, argparse, os, multiprocessing
+
+from config.migrations.main import create_tables
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--env', required=True)
@@ -18,10 +20,12 @@ if args.env == 'production':
 
     reload = False
 
+create_tables()
+
 if __name__ == "__main__":
     uvicorn.run(
-        app='server.main:app',
-        workers=4,
+        app='src.app:app',
+        workers=int(multiprocessing.cpu_count() / 2) + 1,
         host='0.0.0.0',
         port=9000,
         ssl_certfile=ssl_certfile,

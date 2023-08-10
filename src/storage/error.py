@@ -1,6 +1,6 @@
 import falcon
 
-class StorageError:
+class Error:
     @staticmethod
     async def handle(e, req, resp, params):
         raise falcon.HTTPInternalServerError(description=str(e))

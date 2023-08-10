@@ -3,13 +3,17 @@ import falcon, json
 from src.models.users import Users
 from src.hooks.secure import secure
 
+from src.storage.limits import limiter
+
 @falcon.before(secure)
 class UsersResource:
+
+    @limiter.limit()
     async def on_get(self, req, resp):
         print(req.get_param('id', False))
         print(req.params)
 
-        users = Users.select(Users.name).limit(2000000).dicts()
+        users = Users.select(Users.name).limit(1).dicts()
         users = [user for user in users.iterator()]
 
         resp.media = len(users)

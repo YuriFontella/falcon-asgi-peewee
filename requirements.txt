@@ -1,4 +1,5 @@
 falcon
+falcon-limiter
 peewee
 uvicorn[standard]
 psycopg2-binary

@@ -20,7 +20,7 @@ if args.env == 'production':
 
     reload = False
 
-create_tables()
+    create_tables()
 
 if __name__ == "__main__":
     uvicorn.run(
